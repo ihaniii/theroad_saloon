@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>مركز الإدارة والتشغيل | منصة الطريق (The Road OS)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="reception.css">
+  <link rel="stylesheet" href="app.css">
+</head>
+<body>
+
+  <!-- 1. APPLICATION TOP BAR -->
+  <header class="top-bar-shell">
+    <div style="display: flex; align-items: center; gap: 20px;">
+      <img src="assets/logo.jpg" alt="The Road Logo" class="top-bar-logo">
+      <select class="branch-switcher-select">
+        <option>الفرع الرئيسي - العاصمة</option>
+        <option>فرع الخليج - السالمية</option>
+      </select>
+    </div>
+    
+    <div class="top-bar-center">
+      <div class="global-search-trigger" onclick="toggleCommandPalette(true)">
+        <span>البحث العام الفوري في الأنظمة...</span>
+        <span style="font-size: 10px; background: rgba(250, 247, 242, 0.2); padding: 2px 6px; border-radius: 3px;">⌘K</span>
+      </div>
+    </div>
+    
+    <div class="top-bar-left-actions">
+      <button class="notification-bell-btn" onclick="triggerAlert('عضوية دلال المرزوق قاربت على الانتهاء!')">
+        🔔 <span class="notification-badge">٢</span>
+      </button>
+      <span class="user-profile-badge">منى السالم (الاستقبال)</span>
+    </div>
+  </header>
+
+  <!-- 2. MAIN APPLICATION CONTENT GRID -->
+  <div class="main-shell-grid">
+    
+    <!-- Left Navigation Sidebar -->
+    <aside class="sidebar-navigation">
+      <ul class="sidebar-menu">
+        <li class="sidebar-menu-item active" id="nav-reception" onclick="loadModule('reception')"><a href="#">📅 &nbsp; مكتب الاستقبال</a></li>
+        <li class="sidebar-menu-item" id="nav-calendar" onclick="loadModule('calendar')"><a href="#">🗓️ &nbsp; جدول المواعيد</a></li>
+        <li class="sidebar-menu-item" id="nav-pos" onclick="loadModule('pos')"><a href="#">💳 &nbsp; المبيعات POS</a></li>
+        <li class="sidebar-menu-item" id="nav-inventory" onclick="loadModule('inventory')"><a href="#">📦 &nbsp; إدارة المخازن</a></li>
+      </ul>
+      
+      <div class="sidebar-status-box">
+        <div class="status-indicator">
+          <span class="status-dot-active"></span>
+          <span>الاتصال السحابي آمن ومستقر</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Center Module Mount Viewport -->
+    <section class="module-container-viewport" id="module-viewport">
+      <!-- Mounted dynamically by JS -->
+    </section>
+
+    <!-- Right Context Inspector Panel -->
+    <aside class="inspector-panel" id="inspector-viewport">
+      <!-- Mounted dynamically by JS -->
+    </aside>
+
+  </div>
+
+  <!-- 3. GLOBAL COMMAND PALETTE SEARCH MODAL -->
+  <div class="command-palette-overlay" id="command-modal" onclick="toggleCommandPalette(false)">
+    <div class="command-palette-box" onclick="event.stopPropagation()">
+      <input type="text" id="command-search-input" class="command-input" placeholder="اكتب للبحث (عميلات، حجوزات، منتجات، فواتير)..." oninput="filterCommandPalette()">
+      <ul class="command-results-list" id="command-results">
+        <li class="command-result-row" onclick="selectCommandResult('c1')">
+          <div class="command-result-title">دلال المرزوق (عميلة VIP)</div>
+          <div class="command-result-subtitle">تليفون: 96590001122 • عضوية ذهبية</div>
+        </li>
+        <li class="command-result-row" onclick="selectCommandResult('c2')">
+          <div class="command-result-title">نورة الصباح (عميلة VIP)</div>
+          <div class="command-result-subtitle">تليفون: 96599900088 • عضوية بلاتينية</div>
+        </li>
+        <li class="command-result-row" onclick="selectCommandResult('p1')">
+          <div class="command-result-title">زيت الشعر العضوي Teal Hair Oil</div>
+          <div class="command-result-subtitle">المخزون: 15 علبة متبقية • رمز المنتج: P-102</div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- SPA SHELL CONTROLLER SCRIPT -->
+  <script>
+    // Modules state template strings
+    const modules = {
+      reception: {
+        title: 'مكتب الاستقبال',
+        html: `
+          <h1 class="module-title">مكتب الاستقبال اليومي</h1>
+          <div class="stats-header-bar" style="margin-bottom: 25px;">
+            <div class="stat-card-mini">
+              <span class="stat-card-title">إجمالي مواعيد اليوم</span>
+              <span class="stat-card-value" id="stats-total-bookings">٣ حجوزات</span>
+            </div>
+            <div class="stat-card-mini">
+              <span class="stat-card-title">قيد الانتظار حالياً</span>
+              <span class="stat-card-value">١ ضيفة</span>
+            </div>
+            <div class="stat-card-mini">
+              <span class="stat-card-title">متوسط وقت الانتظار</span>
+              <span class="stat-card-value">٨ دقائق</span>
+            </div>
+          </div>
+          
+          <div class="card-common">
+            <h2 class="timeline-title">جدول الخط الزمني</h2>
+            <div class="timeline-items" id="timeline-container">
+              <div class="timeline-row" onclick="loadCustomerProfile('c1')">
+                <span class="timeline-time">10:00 ص</span>
+                <div class="timeline-details">
+                  <div class="timeline-guest-name">دلال المرزوق (VIP)</div>
+                  <div class="timeline-service-desc">قص وتسريح شعر مع الخبيرة سارة (جناح VIP)</div>
+                </div>
+                <button class="btn-small btn-status-label" style="background-color: rgba(20, 46, 52, 0.05); color: var(--color-teal);">نشط حالياً</button>
+              </div>
+              <div class="timeline-row" onclick="loadCustomerProfile('c2')">
+                <span class="timeline-time">11:30 ص</span>
+                <div class="timeline-details">
+                  <div class="timeline-guest-name">نورة الصباح (VIP)</div>
+                  <div class="timeline-service-desc">علاج الأظافر المهدئ مع الخبيرة نادية</div>
+                </div>
+                <button class="btn-small btn-checkout" onclick="loadModule('pos')">إتمام الدفع (POS)</button>
+              </div>
+            </div>
+          </div>
+        `,
+        inspector: `
+          <div class="preview-header">
+            <h2 class="preview-title" id="preview-name">دلال المرزوق</h2>
+            <span class="preview-phone" id="preview-phone">96590001122</span>
+          </div>
+          <div class="preview-grid-details" style="margin-top: 20px;">
+            <div class="preview-detail-box">
+              <span class="preview-label">نوع العضوية</span>
+              <span class="preview-val">عضوية ذهبية VIP</span>
+            </div>
+            <div class="preview-detail-box">
+              <span class="preview-label">الزيارة الأخيرة</span>
+              <span class="preview-val">قبل ٦ أيام (أظافر)</span>
+            </div>
+          </div>
+          <div class="preview-alert-box" style="margin-top: 20px;">
+            <span class="preview-alert-title">⚠️ تنبيه تحسس منتجات</span>
+            <p class="preview-alert-text">تحسس شديد من المنتجات الكيميائية العطرية. يفضل خدمة الجناح الخاص.</p>
+          </div>
+        `
+      },
+      calendar: {
+        title: 'جدول المواعيد',
+        html: `
+          <h1 class="module-title">جدول الحجوزات والمواعيد الأسبوعية</h1>
+          <div class="card-common">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+              <h2 class="timeline-title">أجندة المواعيد النشطة</h2>
+              <button class="cta-btn" onclick="triggerAlert('يرجى استخدام الحجز السريع في مكتب الاستقبال')">إضافة حجز جديد</button>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px;">
+              <div style="background-color: var(--color-warm-beige); padding: 15px; border-radius: 4px;">
+                <div style="font-weight: 700; font-size: 13px;">السبت 11 يوليو</div>
+                <div style="font-size: 11px; margin-top: 8px; color: var(--color-rose-gold);">٥ حجوزات مؤكدة</div>
+              </div>
+              <div style="background-color: var(--color-white); border: 1px solid rgba(20, 46, 52, 0.08); padding: 15px; border-radius: 4px;">
+                <div style="font-weight: 700; font-size: 13px;">الأحد 12 يوليو</div>
+                <div style="font-size: 11px; margin-top: 8px; color: var(--color-rose-gold);">٣ حجوزات مؤكدة</div>
+              </div>
+              <div style="background-color: var(--color-white); border: 1px solid rgba(20, 46, 52, 0.08); padding: 15px; border-radius: 4px;">
+                <div style="font-weight: 700; font-size: 13px;">الإثنين 13 يوليو</div>
+                <div style="font-size: 11px; margin-top: 8px; color: var(--color-rose-gold);">٧ حجوزات مؤكدة</div>
+              </div>
+            </div>
+          </div>
+        `,
+        inspector: `
+          <div class="preview-header">
+            <h2 class="preview-title">تفاصيل الأجندة</h2>
+            <span class="preview-phone">تحديث تلقائي للمزامنة</span>
+          </div>
+          <div style="font-size: 12px; margin-top: 20px; color: var(--color-teal-light);">
+            جميع الغرف والخيارات اللوجستية مفعّلة في جدول المواعيد الرئيسي.
+          </div>
+        `
+      },
+      pos: {
+        title: 'نقطة البيع POS',
+        html: `
+          <h1 class="module-title">محطة الدفع ونقاط البيع السريعة POS</h1>
+          <div class="card-common">
+            <h2 class="timeline-title">الفاتورة النشطة حالياً</h2>
+            <div style="border-bottom: 1px solid rgba(20, 46, 52, 0.08); padding-bottom: 15px; margin-bottom: 15px;">
+              <div style="display: flex; justify-content: space-between; font-size: 13px;">
+                <span>علاج الأظافر المهدئ (نورة الصباح)</span>
+                <strong>١٥.٠٠٠ د.ك</strong>
+              </div>
+              <div style="display: flex; justify-content: space-between; font-size: 13px; margin-top: 10px;">
+                <span>قص وتسريح شعر (دلال المرزوق)</span>
+                <strong>٥٠.٠٠٠ د.ك</strong>
+              </div>
+            </div>
+            <div style="display: flex; justify-content: space-between; font-size: 16px; font-weight: 700; margin-bottom: 20px;">
+              <span>الإجمالي المستحق</span>
+              <span style="color: var(--color-rose-gold);">٦٥.٠٠٠ د.ك</span>
+            </div>
+            <button class="cta-btn" style="width: 100%;" onclick="triggerAlert('تمت معالجة الدفع السريع والربط مع شبكة K-Net بنجاح!')">معالجة الدفع عبر K-Net</button>
+          </div>
+        `,
+        inspector: `
+          <div class="preview-header">
+            <h2 class="preview-title">فواتير اليوم المكتملة</h2>
+            <span class="preview-phone">التقرير المالي الفوري</span>
+          </div>
+          <div style="margin-top: 20px; display: flex; flex-direction: column; gap: 10px;">
+            <div style="display: flex; justify-content: space-between; font-size: 12px; border-bottom: 1px dashed rgba(20, 46, 52, 0.08); padding-bottom: 8px;">
+              <span>فاتورة #1002 (سارة)</span>
+              <strong>٣٥.٠٠٠ د.ك</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; font-size: 12px; border-bottom: 1px dashed rgba(20, 46, 52, 0.08); padding-bottom: 8px;">
+              <span>فاتورة #1001 (دلال)</span>
+              <strong>٥٠.٠٠٠ د.ك</strong>
+            </div>
+          </div>
+        `
+      },
+      inventory: {
+        title: 'إدارة المخازن',
+        html: `
+          <h1 class="module-title">إدارة المنتجات والمخزون الفعلي</h1>
+          <div class="card-common">
+            <h2 class="timeline-title">المنتجات الأكثر مبيعاً اليوم</h2>
+            <table style="width: 100%; border-collapse: collapse; font-size: 12.5px; text-align: right;">
+              <thead>
+                <tr style="border-bottom: 1px solid rgba(20, 46, 52, 0.1); color: var(--color-rose-gold);">
+                  <th style="padding: 10px 0;">المنتج</th>
+                  <th>المخزون الحالي</th>
+                  <th>الخيارات</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid rgba(20, 46, 52, 0.05);">
+                  <td style="padding: 12px 0; font-weight: 700;">زيت الشعر العضوي Teal Hair Oil</td>
+                  <td>15 علبة متبقية</td>
+                  <td><button class="btn-small btn-checkin" onclick="triggerAlert('تم طلب كمية توريد إضافية')">طلب توريد</button></td>
+                </tr>
+                <tr style="border-bottom: 1px solid rgba(20, 46, 52, 0.05);">
+                  <td style="padding: 12px 0; font-weight: 700;">بلسم الترطيب الفائق Hydra Condition</td>
+                  <td>3 علب (مخزون منخفض)</td>
+                  <td><button class="btn-small btn-checkout" onclick="triggerAlert('طلب توريد عاجل للمنتج')">طلب عاجل</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        `,
+        inspector: `
+          <div class="preview-header">
+            <h2 class="preview-title">تفاصيل التوريد</h2>
+            <span class="preview-phone">موردين معتمدين</span>
+          </div>
+          <div style="font-size: 12px; margin-top: 20px; color: var(--color-teal-light);">
+            المورد: شركة منتجات التجميل الطبيعية - العاصمة.
+            وقت التسليم المقدر: خلال ٢٤ ساعة.
+          </div>
+        `
+      }
+    };
+
+    function loadModule(name) {
+      // Toggle sidebar active class
+      document.querySelectorAll('.sidebar-menu-item').forEach(item => {
+        item.classList.remove('active');
+      });
+      document.getElementById('nav-' + name).classList.add('active');
+
+      // Swap viewport and inspector contents dynamically
+      document.getElementById('module-viewport').innerHTML = modules[name].html;
+      document.getElementById('inspector-viewport').innerHTML = modules[name].inspector;
+    }
+
+    function toggleCommandPalette(visible) {
+      const modal = document.getElementById('command-modal');
+      if (visible) {
+        modal.classList.add('visible');
+        document.getElementById('command-search-input').focus();
+      } else {
+        modal.classList.remove('visible');
+      }
+    }
+
+    function filterCommandPalette() {
+      const query = document.getElementById('command-search-input').value.toLowerCase();
+      const rows = document.querySelectorAll('.command-result-row');
+      rows.forEach(row => {
+        const title = row.querySelector('.command-result-title').innerText.toLowerCase();
+        if (title.includes(query)) {
+          row.style.display = 'block';
+        } else {
+          row.style.display = 'none';
+        }
+      });
+    }
+
+    function selectCommandResult(id) {
+      toggleCommandPalette(false);
+      if (id === 'p1') {
+        loadModule('inventory');
+      } else {
+        loadModule('reception');
+      }
+    }
+
+    function triggerAlert(msg) {
+      alert("إشعار النظام الفوري: " + msg);
+    }
+
+    // Capture global keyboard shortcut (⌘K or Ctrl+K for search)
+    window.addEventListener('keydown', function(event) {
+      if ((event.metaKey || event.ctrlKey) && event.key === 'k') {
+        event.preventDefault();
+        toggleCommandPalette(true);
+      }
+    });
+
+    // Default load Reception module on startup
+    loadModule('reception');
+  </script>
+</body>
+</html>

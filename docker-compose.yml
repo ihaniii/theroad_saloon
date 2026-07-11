@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: theroad_postgres
+    environment:
+      POSTGRES_USER: theroad_admin
+      POSTGRES_PASSWORD: theroad_password_2026
+      POSTGRES_DB: theroad_prod
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U theroad_admin -d theroad_prod"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  web:
+    build: .
+    container_name: theroad_api
+    command: uvicorn backend.infrastructure.api.app:app --host 0.0.0.0 --port 8000 --reload
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    environment:
+      - APP_ENV=development
+      - DB_ENGINE=postgresql
+      - POSTGRES_USER=theroad_admin
+      - POSTGRES_PASSWORD=theroad_password_2026
+      - POSTGRES_DB=theroad_prod
+      - POSTGRES_HOST=db
+      - POSTGRES_PORT=5432
+      - JWT_SECRET=the_road_production_secret_key_2026
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  postgres_data:

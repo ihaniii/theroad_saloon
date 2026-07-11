@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>منصة الطريق | The Road OS — الحل التقني الفاخر لإدارة الصالونات</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="منصة الطريق (The Road OS) هي الشريك التشغيلي والتقني الفاخر المخصص حصرياً لصالونات التجميل الراقية ومراكز السبا النسائية في الخليج.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- FLOATING NAVIGATION HEADER -->
+  <header class="site-header">
+    <a href="#" class="logo-link">
+      <img src="assets/logo.jpg" alt="منصة الطريق (The Road Logo)">
+    </a>
+    
+    <nav>
+      <ul class="nav-menu">
+        <li><a href="#philosophy" class="nav-link">فلسفتنا</a></li>
+        <li><a href="#journey" class="nav-link">رحلة الضيفة</a></li>
+        <li><a href="#solutions" class="nav-link">الحلول الذكية</a></li>
+        <li><a href="#growth" class="nav-link">نمو الأعمال</a></li>
+        <li><a href="#partnership" class="nav-link">شراكتنا</a></li>
+        <li><a href="#trust" class="nav-link">الموثوقية</a></li>
+      </ul>
+    </nav>
+    
+    <a href="#contact" class="cta-btn">طلب تجربة الاستعراض</a>
+  </header>
+
+  <!-- 01 | LANDING HERO -->
+  <section class="hero-section">
+    <img src="assets/hero/the_road_flagship_reception_master.webp" alt="The Road Flagship Lobby" class="hero-bg-img">
+    <div class="hero-overlay"></div>
+    
+    <div class="hero-content-box">
+      <div class="hero-badge">كتاب الهوية والتشغيل الرقمي الفاخر</div>
+      <h1 class="hero-title">شراكة الجمال والتقنية الهادئة</h1>
+      <p class="hero-subtitle">
+        نظام التشغيل الذكي المخصص حصرياً لصالونات التجميل الفاخرة والسبا النسائي في منطقة الخليج العربي.
+      </p>
+      <a href="#contact" class="cta-btn" style="padding: 15px 35px; font-size: 14px;">احجز جلستك الاستشارية الخاصة</a>
+    </div>
+  </section>
+
+  <!-- 02 | OUR PHILOSOPHY -->
+  <section id="philosophy" class="section-wrapper" style="background-color: var(--color-white);">
+    <span class="section-badge">فلسفة التمكين التشغيلي</span>
+    <h2 class="section-title">الضيافة أولاً، والتقنية في خدمة الإنسان</h2>
+    
+    <div class="philosophy-layout">
+      <div class="philosophy-text-block">
+        <p>
+          نحن نؤمن بأن صالونات الجمال والسبا الفخم هي مساحات للاسترخاء والرفاهية، وليست مراكز لإدخال البيانات. لذا، صممنا منصة <strong>The Road OS</strong> لتختفي تماماً وتعمل في الكواليس بصمت.
+        </p>
+        <p>
+          حين تكون التقنية غير محسوسة، يركز فريقك الفني على تقديم ضيافة استثنائية، ويسير يوم العمل بتناغم هادئ يمنح الضيفات تجربة لا تُنسى ويضمن لصالونك الاستدامة والريادة.
+        </p>
+      </div>
+      
+      <div class="philosophy-text-block">
+        <p class="philosophy-quote">
+          "إن قمة الفخامة تكمن في البساطة التي تجعل العمليات المعقدة تدور بهدوء وانسيابية تامة."
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 | GUEST JOURNEY -->
+  <section id="journey" class="section-wrapper">
+    <span class="section-badge">رحلة الضيفة المتصلة</span>
+    <h2 class="section-title">تناغم تشغيلي يرافق ضيفتك في كل خطوة</h2>
+    
+    <!-- INTERACTIVE SELECTORS -->
+    <div class="journey-tabs-nav">
+      <button class="journey-tab-btn active" onclick="showJourneyStep(1)">١. الاستقبال</button>
+      <button class="journey-tab-btn" onclick="showJourneyStep(2)">٢. الاستشارة</button>
+      <button class="journey-tab-btn" onclick="showJourneyStep(3)">٣. العناية بالشعر</button>
+      <button class="journey-tab-btn" onclick="showJourneyStep(4)">٤. مستحضرات التجميل</button>
+      <button class="journey-tab-btn" onclick="showJourneyStep(5)">٥. السبا الخاص</button>
+      <button class="journey-tab-btn" onclick="showJourneyStep(6)">٦. جناح كبار العميلات</button>
+      <button class="journey-tab-btn" onclick="showJourneyStep(7)">٧. مغادرة هادئة</button>
+    </div>
+    
+    <!-- DYNAMIC CARD VIEW -->
+    <div class="journey-content-card" id="journey-card">
+      <img src="assets/hero/the_road_flagship_reception_master.webp" alt="Lobby Step" class="journey-card-img" id="journey-img">
+      <div class="journey-card-text">
+        <span class="journey-card-step-num" id="journey-num">الخطوة الأولى — THE ROAD SPA</span>
+        <h3 class="journey-card-title" id="journey-title">الاستقبال والترحيب</h3>
+        <p class="journey-card-desc" id="journey-desc">
+          تبدأ التجربة بترحيب هادئ. يتعرف النظام فوراً على الحجز المسبق للضيفة ونقاط ولائها دون الحاجة للمس الأوراق أو تشتيت انتباهها.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 | SOLUTIONS -->
+  <section id="solutions" class="section-wrapper" style="background-color: var(--color-white);">
+    <span class="section-badge">محاور التشغيل الذكي</span>
+    <h2 class="section-title">الحلول المتكاملة لإدارة صالونات التجميل الفاخرة</h2>
+    
+    <div class="solutions-grid">
+      <div class="solution-card">
+        <span class="solution-icon">✦</span>
+        <h3 class="solution-card-title">إدارة الحجوزات الذكية</h3>
+        <p class="solution-card-desc">جدولة فائقة الدقة تمنع تضارب المواعيد وتوزع العميلات بمرونة على كراسي الخدمة.</p>
+      </div>
+      <div class="solution-card">
+        <span class="solution-icon">✦</span>
+        <h3 class="solution-card-title">نقاط البيع والمبيعات POS</h3>
+        <p class="solution-card-desc">واجهات بيع مبسطة بالكامل تدعم الدفع الفوري وحساب العمولات للخبيرات تلقائياً.</p>
+      </div>
+      <div class="solution-card">
+        <span class="solution-icon">✦</span>
+        <h3 class="solution-card-title">المستودعات والمنتجات</h3>
+        <p class="solution-card-desc">متابعة دقيقة لمخزون عبوات الجمال الاحترافية والتجزئة مع التنبيه التلقائي لإعادة الشراء.</p>
+      </div>
+      <div class="solution-card">
+        <span class="solution-icon">✦</span>
+        <h3 class="solution-card-title">العلاقات ونقاط الولاء CRM</h3>
+        <p class="solution-card-desc">حفظ تفضيلات الضيفات وسجلات العناية بالشعر والبشرة لتقديم خدمة مخصصة في كل مرة.</p>
+      </div>
+      <div class="solution-card">
+        <span class="solution-icon">✦</span>
+        <h3 class="solution-card-title">المرتبات والعمولات</h3>
+        <p class="solution-card-desc">نظام محاسبي متكامل لحساب رواتب الخبيرات وعمولات الخدمات والمنتجات بدقة تامة.</p>
+      </div>
+      <div class="solution-card">
+        <span class="solution-icon">✦</span>
+        <h3 class="solution-card-title">إدارة الفروع المتعددة</h3>
+        <p class="solution-card-desc">لوحة تحكم مركزية تمنح الملاك رؤية واضحة ومقارنة شاملة لمستويات الدخل والأداء بالفروع.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 | BUSINESS GROWTH -->
+  <section id="growth" class="section-wrapper">
+    <span class="section-badge">رؤية الملاك والنمو</span>
+    <h2 class="section-title">بيانات واضحة... لقرارات واثقة</h2>
+    
+    <div class="growth-layout">
+      <div class="growth-text-block">
+        <div class="growth-story">
+          <p>
+            تمنح منصة <strong>The Road OS</strong> ملاك الصالونات راحة بال تامة. من خلال لوحات المتابعة التنفيذية الفخمة التي تلخص اليوم المالي والتشغيلي في ثوانٍ معدودة.
+          </p>
+        </div>
+        <p>
+          نحن نساعدك على حماية إيراداتك من التسرب المحاسبي، وحساب العمولات بمرونة تامة تسعد فريقك الفني، وتزيد من معدلات الإقبال والاحتفاظ بالعميلات VIP من خلال دراسة سلوك استهلاك الباقات وعلاجات الجمال الدورية.
+        </p>
+      </div>
+      
+      <div class="growth-text-block">
+        <img src="assets/hero/TR_HERO_04_Executive_Review_v1.webp" alt="The Road Executive Dashboard Review" style="width: 100%; border-radius: 6px; box-shadow: 0 20px 50px rgba(20, 46, 52, 0.06);">
+      </div>
+    </div>
+  </section>
+
+  <!-- 06 | PARTNERSHIP -->
+  <section id="partnership" class="section-wrapper" style="background-color: var(--color-white);">
+    <span class="section-badge">علاقة الشراكة والاستدامة</span>
+    <h2 class="section-title">نحن بجانبكم في كل مرحلة</h2>
+    
+    <div class="blocks-grid">
+      <div class="block-item">
+        <h3 class="block-title">التدريب والتمكين</h3>
+        <p class="block-desc">تدريب متكامل ومباشر لكافة الخبيرات ومسؤولات الاستقبال لضمان سهولة التشغيل.</p>
+      </div>
+      <div class="block-item">
+        <h3 class="block-title">التدشين والافتتاح</h3>
+        <p class="block-desc">مواءمة وتجهيز نظام الفواتير وباقات الخدمات وقوائم الأسعار قبل الافتتاح.</p>
+      </div>
+      <div class="block-item">
+        <h3 class="block-title">الدعم والمرافقة</h3>
+        <p class="block-desc">دعم تشغيلي ومحاسبي مباشر على مدار اليوم لحل أي عائق فوراً وبصمت.</p>
+      </div>
+      <div class="block-item">
+        <h3 class="block-title">التطوير والنمو</h3>
+        <p class="block-desc">استشارات ودراسة دورية لمؤشرات الأداء لمساعدتكم على التوسع والنمو المالي.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 07 | TRUST -->
+  <section id="trust" class="section-wrapper">
+    <span class="section-badge">البنية الأمنية للمنظومة</span>
+    <h2 class="section-title">الموثوقية والسرية التامة لصالونك</h2>
+    
+    <div class="blocks-grid">
+      <div class="block-item">
+        <h3 class="block-title">Odoo Foundation</h3>
+        <p class="block-desc">منظومة مبنية على أمان واستقرار نظام Odoo المعتمد عالمياً لتأمين الحسابات والمخازن.</p>
+      </div>
+      <div class="block-item">
+        <h3 class="block-title">سحابة تشغيلية آمنة</h3>
+        <p class="block-desc">تشفير كامل وحماية لبيانات العميلات وتفضيلات الخدمة بنسبة تشغيل وضمان استمرارية.</p>
+      </div>
+      <div class="block-item">
+        <h3 class="block-title">نسخ احتياطي فوري</h3>
+        <p class="block-desc">نسخ تلقائي مستمر ومحافظة كاملة على البيانات المالية والتقارير التنفيذية من أي فقدان.</p>
+      </div>
+      <div class="block-item">
+        <h3 class="block-title">حماية نقاط الولاء</h3>
+        <p class="block-desc">نظام مغلق لحفظ أرصدة المحافظ والعمولات المكتسبة يمنع أي تسرب مالي تماماً.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 08 | CONTACT FOOTER -->
+  <footer id="contact" class="contact-section">
+    <div class="contact-layout">
+      <div class="contact-info-side">
+        <h2 class="contact-title">ابدأ رحلتك معنا اليوم</h2>
+        <p class="contact-subtitle">
+          يسعدنا تقديم استشارة تشغيلية خاصة لصالونك الراقي. احجز موعدك الآن لنعرض لك كيف يمكن لـ The Road OS إعادة تعريف تجربة ضيفاتك.
+        </p>
+        
+        <div class="contact-channels">
+          <a href="https://theroadkw.com" class="contact-channel-item" target="_blank">
+            🌐 &nbsp; theroadkw.com
+          </a>
+          <a href="mailto:info@theroadkw.com" class="contact-channel-item">
+            ✉️ &nbsp; info@theroadkw.com
+          </a>
+          <a href="https://wa.me/9651234567" class="contact-channel-item" target="_blank">
+            💬 &nbsp; تواصل معنا عبر واتساب
+          </a>
+        </div>
+      </div>
+      
+      <div class="qr-side">
+        <img src="assets/qr.png" alt="The Road Official Contact QR" class="contact-qr-img">
+        <span class="qr-caption">امسح الكود لحفظ جهة الاتصال والتواصل الفوري</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- INTERACTIVE JS FOR SELECTING STEPS -->
+  <script>
+    const stepsData = {
+      1: {
+        num: 'الخطوة الأولى — THE ROAD SPA',
+        title: 'الاستقبال والترحيب',
+        desc: 'تبدأ التجربة بترحيب هادئ. يتعرف النظام فوراً على الحجز المسبق للضيفة ونقاط ولائها دون الحاجة للمس الأوراق أو تشتيت انتباهها.',
+        img: 'assets/hero/the_road_flagship_reception_master.webp'
+      },
+      2: {
+        num: 'الخطوة الثانية — THE ROAD CARE',
+        title: 'الاستشارة والتقييم',
+        desc: 'مراجعة سرية لتفضيلات الضيفة وعلاجات الجمال السابقة وسجلات صحة الشعر على جهاز الأيباد المحمول الخاص بمسؤولة الاستشارة.',
+        img: 'assets/details/TR_Detail_03_Welcome_Folder.webp'
+      },
+      3: {
+        num: 'الخطوة الثالثة — THE ROAD PROFESSIONAL',
+        title: 'العناية الفائقة بالشعر',
+        desc: 'أثناء الخدمة، يتابع مصفف الشعر تفاصيل العلاج ومستحضرات العناية بالشعر المناسبة من خلال المنظومة الرقمية غير المحسوسة.',
+        img: 'assets/hero/the_road_signature_operations_master.webp'
+      },
+      4: {
+        num: 'الخطوة الرابعة — THE ROAD BEAUTY',
+        title: 'مستحضرات التجميل والعناية بالبشرة',
+        desc: 'خبيرات التجميل يطلعن على تفضيلات الألوان والمنتجات التي تلائم بشرة الضيفة، لتقديم تجربة علاج متكاملة ومترابطة.',
+        img: 'assets/hero/TR_HERO_05_Retail_Experience_v1.webp'
+      },
+      5: {
+        num: 'الخطوة الخامسة — THE ROAD SPA',
+        title: 'الاسترخاء في السبا النسائي',
+        desc: 'جدولة دقيقة وسلسة للمساج وعلاجات الجسد تضمن للضيفة الدخول الفوري لغرف السبا دون انتظار أو احتكاك تشغيلي.',
+        img: 'assets/hero/TR_HERO_03_VIP_Beauty_Suite_v1.webp'
+      },
+      6: {
+        num: 'الخطوة السادسة — THE ROAD VIP',
+        title: 'جناح كبار العميلات VIP',
+        desc: 'خصوصية تامة واستثنائية لكبار العميلات في غرف تجميل مغلقة متصلة بكافة الخدمات، مع إمكانية تحديث باقة العضوية تلقائياً.',
+        img: 'assets/hero/TR_HERO_03_VIP_Beauty_Suite_v1.webp'
+      },
+      7: {
+        num: 'الخطوة السابعة — THE ROAD CARE',
+        title: 'مغادرة هادئة ودفع آمن',
+        desc: 'دفع سلس دون تعقيد أو طوابير طويلة. يتلقى النظام الدفع ويرسل الفاتورة إلكترونياً، مع وداع راقٍ يدعوها للزيارة القادمة.',
+        img: 'assets/hero/the_road_flagship_reception_master.webp'
+      }
+    };
+
+    function showJourneyStep(stepId) {
+      // Toggle tab buttons
+      const buttons = document.querySelectorAll('.journey-tab-btn');
+      buttons.forEach((btn, idx) => {
+        if (idx === (stepId - 1)) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      });
+
+      // Update card content
+      const data = stepsData[stepId];
+      document.getElementById('journey-img').src = data.img;
+      document.getElementById('journey-num').innerText = data.num;
+      document.getElementById('journey-title').innerText = data.title;
+      document.getElementById('journey-desc').innerText = data.desc;
+    }
+  </script>
+</body>
+</html>

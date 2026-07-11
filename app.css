@@ -1,0 +1,293 @@
+@import url('https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Cairo:wght@300;400;500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300&display=swap');
+
+:root {
+  --color-teal: #142e34;
+  --color-teal-dark: #0c1c20;
+  --color-teal-light: #20454e;
+  --color-rose-gold: #c88a82;
+  --color-champagne: #e5cdbc;
+  --color-warm-beige: #faf7f2;
+  --color-ivory: #fafafa;
+  --color-white: #ffffff;
+  --font-serif: 'Amiri', serif;
+  --font-sans: 'Cairo', sans-serif;
+  --font-display: 'Cormorant Garamond', serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-warm-beige);
+  color: var(--color-teal-dark);
+  direction: rtl;
+  text-align: right;
+  -webkit-font-smoothing: antialiased;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* --- 1. APPLICATION TOP BAR --- */
+.top-bar-shell {
+  height: 60px;
+  background-color: var(--color-teal);
+  color: var(--color-white);
+  padding: 0 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(250, 247, 242, 0.1);
+  z-index: 100;
+}
+
+.top-bar-logo {
+  height: 30px;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+}
+
+.top-bar-center {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-grow: 1;
+  justify-content: center;
+  max-width: 600px;
+}
+
+.branch-switcher-select {
+  background: rgba(250, 247, 242, 0.1);
+  border: 1px solid rgba(250, 247, 242, 0.2);
+  color: var(--color-white);
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  outline: none;
+}
+
+.global-search-trigger {
+  background: rgba(250, 247, 242, 0.15);
+  border: 1px solid rgba(250, 247, 242, 0.2);
+  color: var(--color-champagne);
+  padding: 8px 20px;
+  border-radius: 4px;
+  width: 320px;
+  font-size: 12px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.top-bar-left-actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.notification-bell-btn {
+  background: none;
+  border: none;
+  color: var(--color-champagne);
+  font-size: 16px;
+  cursor: pointer;
+  position: relative;
+}
+
+.notification-badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background-color: var(--color-rose-gold);
+  color: var(--color-white);
+  font-size: 9px;
+  padding: 2px 5px;
+  border-radius: 50%;
+}
+
+.user-profile-badge {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--color-white);
+}
+
+/* --- 2. MAIN GRID LAYOUT --- */
+.main-shell-grid {
+  display: flex;
+  flex-grow: 1;
+  height: calc(100vh - 60px);
+}
+
+/* Left Sidebar Navigation (15% width) */
+.sidebar-navigation {
+  width: 15%;
+  background-color: var(--color-teal-dark);
+  padding: 25px 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.sidebar-menu {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.sidebar-menu-item a {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  color: var(--color-champagne);
+  text-decoration: none;
+  opacity: 0.85;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.sidebar-menu-item.active a, .sidebar-menu-item a:hover {
+  opacity: 1;
+  color: var(--color-white);
+  background-color: var(--color-teal-light);
+  border-right: 3px solid var(--color-rose-gold);
+}
+
+.sidebar-status-box {
+  border-top: 1px solid rgba(250, 247, 242, 0.08);
+  padding-top: 15px;
+}
+
+.status-indicator {
+  font-size: 11px;
+  color: var(--color-champagne);
+  opacity: 0.6;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.status-dot-active {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #2ec4b6;
+}
+
+/* Dynamic Module Container (55% width) */
+.module-container-viewport {
+  width: 55%;
+  height: 100%;
+  overflow-y: auto;
+  padding: 30px;
+  background-color: var(--color-warm-beige);
+}
+
+/* Right Context Inspector (30% width) */
+.inspector-panel {
+  width: 30%;
+  background-color: var(--color-white);
+  border-right: 1px solid rgba(229, 205, 188, 0.35);
+  height: 100%;
+  padding: 30px;
+  overflow-y: auto;
+}
+
+/* --- MODULE REUSE & STUB RULES --- */
+.module-title {
+  font-family: var(--font-serif);
+  font-size: 26px;
+  color: var(--color-teal);
+  margin-bottom: 20px;
+}
+
+.card-common {
+  background-color: var(--color-white);
+  border: 1px solid rgba(229, 205, 188, 0.35);
+  border-radius: 6px;
+  padding: 25px;
+  box-shadow: 0 10px 30px rgba(20, 46, 52, 0.02);
+  margin-bottom: 25px;
+}
+
+/* --- 3. COMMAND PALETTE GLOBAL SEARCH MODAL --- */
+.command-palette-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(12, 28, 32, 0.6);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  z-index: 2000;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 15vh;
+  visibility: hidden;
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.command-palette-overlay.visible {
+  visibility: visible;
+  opacity: 1;
+}
+
+.command-palette-box {
+  width: 500px;
+  background-color: var(--color-white);
+  border: 1px solid rgba(229, 205, 188, 0.5);
+  border-radius: 6px;
+  box-shadow: 0 35px 80px rgba(20, 46, 52, 0.25);
+  overflow: hidden;
+}
+
+.command-input {
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid rgba(20, 46, 52, 0.08);
+  padding: 18px 25px;
+  font-family: var(--font-sans);
+  font-size: 14.5px;
+  color: var(--color-teal);
+  outline: none;
+}
+
+.command-results-list {
+  max-height: 280px;
+  overflow-y: auto;
+  list-style: none;
+}
+
+.command-result-row {
+  padding: 12px 25px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.command-result-row:hover {
+  background-color: rgba(229, 205, 188, 0.15);
+}
+
+.command-result-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-teal);
+}
+
+.command-result-subtitle {
+  font-size: 10.5px;
+  color: var(--color-rose-gold);
+}

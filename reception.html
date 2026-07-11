@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>المكتب الرئيسي للتشغيل | منصة الطريق (The Road OS)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="reception.css">
+</head>
+<body>
+
+  <main class="reception-container">
+    
+    <!-- 1. LEFT SIDEBAR -->
+    <aside class="sidebar-panel">
+      <div>
+        <img src="assets/logo.jpg" alt="The Road OS Logo" class="sidebar-logo">
+        <ul class="sidebar-menu">
+          <li class="sidebar-menu-item active"><a href="#">📅 &nbsp; لوحة اليوم</a></li>
+          <li class="sidebar-menu-item"><a href="#">👥 &nbsp; الحجوزات</a></li>
+          <li class="sidebar-menu-item"><a href="#">🛍️ &nbsp; نقاط البيع POS</a></li>
+          <li class="sidebar-menu-item"><a href="#">📦 &nbsp; المخازن</a></li>
+          <li class="sidebar-menu-item"><a href="#">💬 &nbsp; الرسائل</a></li>
+          <li class="sidebar-menu-item"><a href="#">⚙️ &nbsp; الإعدادات</a></li>
+        </ul>
+      </div>
+      
+      <div class="sidebar-footer-stats">
+        <div>
+          <span class="sidebar-stat-label">المستخدم</span>
+          <div class="sidebar-stat-val">منى السالم (الاستقبال)</div>
+        </div>
+        <div>
+          <span class="sidebar-stat-label">الفرع النشط</span>
+          <div class="sidebar-stat-val">الفرع الرئيسي - العاصمة</div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- 2. CENTER PANEL (TIMELINE & SCHEDULING) -->
+    <section class="center-panel">
+      <!-- Header Stats Row -->
+      <div class="stats-header-bar">
+        <div class="stat-card-mini">
+          <span class="stat-card-title">إجمالي حجوزات اليوم</span>
+          <span class="stat-card-value" id="stats-total-bookings">٤ حجوزات</span>
+        </div>
+        <div class="stat-card-mini">
+          <span class="stat-card-title">قيد الانتظار حالياً</span>
+          <span class="stat-card-value" id="stats-waiting-count">١ ضيفة</span>
+        </div>
+        <div class="stat-card-mini">
+          <span class="stat-card-title">كبار العميلات VIP اليوم</span>
+          <span class="stat-card-value">٢ ضيفات</span>
+        </div>
+      </div>
+
+      <!-- Quick Search -->
+      <div class="search-bar-box">
+        <input type="text" id="guest-search" class="search-input" placeholder="البحث السريع عن الضيفة بالاسم، الهاتف، أو رقم العضوية..." oninput="filterTimeline()">
+        <span class="search-icon-placeholder">🔍</span>
+      </div>
+
+      <!-- Timeline / Today's Schedule -->
+      <div class="timeline-card">
+        <h2 class="timeline-title">جدول مواعيد اليوم (الخط الزمني)</h2>
+        <div class="timeline-items" id="timeline-container">
+          <!-- Item 1 -->
+          <div class="timeline-row" id="appt-row-1" onclick="loadCustomerProfile('c1')">
+            <span class="timeline-time">10:00 ص</span>
+            <div class="timeline-details">
+              <div class="timeline-guest-name">دلال المرزوق (VIP)</div>
+              <div class="timeline-service-desc">قص وتسريح شعر مع الخبيرة سارة (جناح VIP)</div>
+            </div>
+            <div class="timeline-action-zone" id="action-zone-1">
+              <button class="btn-small btn-checkin" onclick="checkInAppointment(1, event)">تسجيل حضور (Check In)</button>
+            </div>
+          </div>
+          
+          <!-- Item 2 -->
+          <div class="timeline-row" id="appt-row-2" onclick="loadCustomerProfile('c2')">
+            <span class="timeline-time">11:30 ص</span>
+            <div class="timeline-details">
+              <div class="timeline-guest-name">نورة الصباح (VIP)</div>
+              <div class="timeline-service-desc">علاج الأظافر المهدئ مع الخبيرتين نادية وأروى</div>
+            </div>
+            <div class="timeline-action-zone" id="action-zone-2">
+              <button class="btn-small btn-status-label" style="background-color: rgba(200, 138, 130, 0.15); color: var(--color-rose-gold);">نشط حالياً</button>
+              <button class="btn-small btn-checkout" onclick="checkOutAppointment(2, event)">إتمام الدفع (POS)</button>
+            </div>
+          </div>
+
+          <!-- Item 3 -->
+          <div class="timeline-row" id="appt-row-3" onclick="loadCustomerProfile('c3')">
+            <span class="timeline-time">02:00 م</span>
+            <div class="timeline-details">
+              <div class="timeline-guest-name">سارة الدوسري</div>
+              <div class="timeline-service-desc">صبغة شعر كاملة مع الخبيرة رنا</div>
+            </div>
+            <div class="timeline-action-zone" id="action-zone-3">
+              <button class="btn-small btn-checkin" onclick="checkInAppointment(3, event)">تسجيل حضور (Check In)</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Booking Form -->
+      <div class="quick-booking-card">
+        <h2 class="timeline-title">حجز موعد سريع جديد</h2>
+        <form id="booking-form" onsubmit="createNewBooking(event)">
+          <div class="booking-form-grid">
+            <div class="form-group">
+              <span class="form-label">الضيفة</span>
+              <select id="form-customer" class="form-select" required>
+                <option value="c1">دلال المرزوق (VIP)</option>
+                <option value="c3">سارة الدوسري</option>
+                <option value="c4" selected>شيخة العجمي</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <span class="form-label">الخدمة المطلوبة</span>
+              <select id="form-service" class="form-select" required>
+                <option value="قص وتسريح شعر">قص وتسريح شعر</option>
+                <option value="علاج الأظافر المهدئ">علاج الأظافر المهدئ</option>
+                <option value="صبغة شعر كاملة">صبغة شعر كاملة</option>
+                <option value="عناية متكاملة بالبشرة">عناية متكاملة بالبشرة</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <span class="form-label">الخبير الفني</span>
+              <select id="form-employee" class="form-select" required>
+                <option value="سارة">الخبيرة سارة</option>
+                <option value="نادية">الخبيرة نادية</option>
+                <option value="رنا">الخبيرة رنا</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <span class="form-label">الوقت المفضل</span>
+              <select id="form-time" class="form-select" required>
+                <option value="03:30 م">03:30 م</option>
+                <option value="04:00 م">04:00 م</option>
+                <option value="05:30 م">05:30 م</option>
+              </select>
+            </div>
+          </div>
+          <button type="submit" class="cta-btn" style="margin-top: 20px; width: 100%;">تأكيد حجز الموعد الفوري</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- 3. RIGHT PANEL (CUSTOMER PREVIEW & CONTEXT) -->
+    <section class="right-panel">
+      <div class="preview-header">
+        <h2 class="preview-title" id="preview-name">دلال المرزوق</h2>
+        <span class="preview-phone" id="preview-phone">96590001122</span>
+      </div>
+
+      <div class="preview-grid-details">
+        <div class="preview-detail-box">
+          <span class="preview-label">نوع العضوية</span>
+          <span class="preview-val" id="preview-membership">عضوية ذهبية VIP</span>
+        </div>
+        <div class="preview-detail-box">
+          <span class="preview-label">الزيارة الأخيرة</span>
+          <span class="preview-val" id="preview-last-visit">قبل ٦ أيام (أظافر)</span>
+        </div>
+        <div class="preview-detail-box">
+          <span class="preview-label">رصيد الحساب المالي</span>
+          <span class="preview-val" id="preview-balance">لا يوجد ذمم مستحقة</span>
+        </div>
+        <div class="preview-detail-box">
+          <span class="preview-label">الباقات النشطة</span>
+          <span class="preview-val" id="preview-packages">باقة علاج الشعر (٢ متبقي)</span>
+        </div>
+      </div>
+
+      <!-- Alerts / Preferences Box -->
+      <div class="preview-alert-box" id="preview-alert-container">
+        <span class="preview-alert-title">⚠️ تفضيلات هامة للضيفة</span>
+        <p class="preview-alert-text" id="preview-alert-desc">تحسس شديد من المنتجات الكيميائية العطرية. يفضل خدمة الجناح الخاص.</p>
+      </div>
+
+      <!-- Quick Notes Editor -->
+      <div class="quick-notes-box">
+        <span class="preview-label">ملاحظات الاستقبال السريعة</span>
+        <textarea id="notes-area" class="notes-textarea" placeholder="اكتب ملاحظة استقبال هنا للزيارة القادمة..." oninput="updateNotes()"></textarea>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- INTERACTIVE JS FOR RECEPTION WORKSPACE -->
+  <script>
+    // Fake Database for Customer Profiles
+    const customersData = {
+      'c1': {
+        name: 'دلال المرزوق',
+        phone: '96590001122',
+        membership: 'عضوية ذهبية VIP',
+        lastVisit: 'قبل ٦ أيام (أظافر)',
+        balance: 'لا يوجد ذمم مستحقة',
+        packages: 'باقة علاج الشعر (٢ متبقي)',
+        alert: 'تحسس شديد من المنتجات الكيميائية العطرية. يفضل خدمة الجناح الخاص.',
+        notes: 'تفضل القهوة العربية خفيفة الهيل.'
+      },
+      'c2': {
+        name: 'نورة الصباح',
+        phone: '96599900088',
+        membership: 'عضوية بلاتينية VIP',
+        lastVisit: 'أمس (قص وصبغ)',
+        balance: 'لا يوجد ذمم مستحقة',
+        packages: 'باقة العناية بالبشرة (٤ متبقي)',
+        alert: 'تفضل الخبيرة نادية فقط لخدمات العناية بالأظافر.',
+        notes: 'الحرص على توفير مياه الورد الخاصة لها.'
+      },
+      'c3': {
+        name: 'سارة الدوسري',
+        phone: '96590002233',
+        membership: 'عضوية عامة',
+        lastVisit: 'قبل أسبوعين (استشارة)',
+        balance: '١٥.٠٠٠ د.ك متبقي',
+        packages: 'لا يوجد باقات نشطة',
+        alert: 'لا يوجد تحسسات مسجلة.',
+        notes: ''
+      },
+      'c4': {
+        name: 'شيخة العجمي',
+        phone: '96590004455',
+        membership: 'عضوية عامة',
+        lastVisit: 'الزيارة الأولى اليوم',
+        balance: 'لا يوجد ذمم مستحقة',
+        packages: 'لا يوجد باقات نشطة',
+        alert: 'تفضل مستحضرات العناية الطبيعية.',
+        notes: 'الضيفة جديدة للصالون.'
+      }
+    };
+
+    let activeCustomerId = 'c1';
+
+    function loadCustomerProfile(id) {
+      activeCustomerId = id;
+      const data = customersData[id];
+      document.getElementById('preview-name').innerText = data.name;
+      document.getElementById('preview-phone').innerText = data.phone;
+      document.getElementById('preview-membership').innerText = data.membership;
+      document.getElementById('preview-last-visit').innerText = data.lastVisit;
+      document.getElementById('preview-balance').innerText = data.balance;
+      document.getElementById('preview-packages').innerText = data.packages;
+      document.getElementById('preview-alert-desc').innerText = data.alert;
+      document.getElementById('notes-area').value = data.notes;
+    }
+
+    function updateNotes() {
+      const notesVal = document.getElementById('notes-area').value;
+      customersData[activeCustomerId].notes = notesVal;
+    }
+
+    function checkInAppointment(id, event) {
+      if (event) event.stopPropagation(); // prevent loading profile row triggers
+      
+      const actionZone = document.getElementById('action-zone-' + id);
+      actionZone.innerHTML = `
+        <button class="btn-small btn-status-label" style="background-color: rgba(200, 138, 130, 0.15); color: var(--color-rose-gold);">نشط حالياً</button>
+        <button class="btn-small btn-checkout" onclick="checkOutAppointment(${id}, event)">إتمام الدفع (POS)</button>
+      `;
+
+      // Update Waiting stats
+      document.getElementById('stats-waiting-count').innerText = '١ ضيفة';
+    }
+
+    function checkOutAppointment(id, event) {
+      if (event) event.stopPropagation();
+      
+      const actionZone = document.getElementById('action-zone-' + id);
+      actionZone.innerHTML = `
+        <button class="btn-small btn-status-label" style="background-color: rgba(20, 46, 52, 0.05); color: var(--color-teal);">مكتمل (تم الدفع)</button>
+      `;
+    }
+
+    function createNewBooking(event) {
+      event.preventDefault();
+      
+      const customerId = document.getElementById('form-customer').value;
+      const service = document.getElementById('form-service').value;
+      const employee = document.getElementById('form-employee').value;
+      const time = document.getElementById('form-time').value;
+
+      const customerName = customersData[customerId].name;
+      const isVip = customersData[customerId].membership.includes('VIP') ? ' (VIP)' : '';
+
+      const container = document.getElementById('timeline-container');
+      const newId = container.children.length + 1;
+
+      const newRowHtml = `
+        <div class="timeline-row" id="appt-row-${newId}" onclick="loadCustomerProfile('${customerId}')">
+          <span class="timeline-time">${time}</span>
+          <div class="timeline-details">
+            <div class="timeline-guest-name">${customerName}${isVip}</div>
+            <div class="timeline-service-desc">${service} مع الخبيرة ${employee}</div>
+          </div>
+          <div class="timeline-action-zone" id="action-zone-${newId}">
+            <button class="btn-small btn-checkin" onclick="checkInAppointment(${newId}, event)">تسجيل حضور (Check In)</button>
+          </div>
+        </div>
+      `;
+
+      container.innerHTML += newRowHtml;
+
+      // Update statistics
+      document.getElementById('stats-total-bookings').innerText = newId + ' حجوزات';
+    }
+
+    function filterTimeline() {
+      const query = document.getElementById('guest-search').value.toLowerCase();
+      const rows = document.querySelectorAll('.timeline-row');
+      
+      rows.forEach(row => {
+        const name = row.querySelector('.timeline-guest-name').innerText.toLowerCase();
+        const desc = row.querySelector('.timeline-service-desc').innerText.toLowerCase();
+        
+        if (name.includes(query) || desc.includes(query)) {
+          row.style.display = 'flex';
+        } else {
+          row.style.display = 'none';
+        }
+      });
+    }
+  </script>
+</body>
+</html>
