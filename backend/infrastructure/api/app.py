@@ -26,7 +26,7 @@ from backend.application.invoice.dto import CreateInvoiceRequest
 from backend.infrastructure.auth.jwt_handler import JwtHandler
 
 app = FastAPI(
-    title="The Road OS",
+    title="The Road Company",
     description="Production-grade API for luxury beauty salon operations in the GCC.",
     version="1.0.0",
     docs_url="/docs",
